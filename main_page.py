@@ -63,16 +63,13 @@ if btn:
 
             if buysell == 'Sell':
                 profit*=-1
-            if profit >= 0:
-                profloss = 'Profit'
-            else:
-                profloss = 'Loss'
+            
 
             if 'df' not in st.session_state:
-                df = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name, 'Profit/Loss':profloss}])
+                df = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name}])
                 st.session_state['df'] = df
             else:
-                row_to_append = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name, 'Profit/Loss':profloss}])
+                row_to_append = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name}])
                 st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
         btn = False
 else:
@@ -90,7 +87,9 @@ chart = alt.Chart(st.session_state['df']).mark_line().encode(
 )
 
 
-totals = st.session_state['df'].groupby('Expiration Price', 'Profit/Loss')['Profit'].sum().reset_index()
+totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().reset_index()
+totals['Profit/Loss'] = 'Profit'
+totals.loc[totals['Profit'] < 0, 'Profit/Loss'] == 'Loss'
 
 chart2 = alt.Chart(totals).mark_area(opacity=0.3).encode(
     x='Expiration Price',
