@@ -45,12 +45,13 @@ st.write(st.session_state['opt'])
 #st.multiselect('Compare multiple options')
 
 options = st.session_state['opt']
-for row in options.iterrows():
-    strike = row[1]['Strike']
-    option_type = row[1]['Type']
-    buysell = row[1]['Direction']
-    commission = row[1]['Commission']
-    name = row[1]['Name']
+for idx in options.len():
+    row = df.iloc[[idx-1]]
+    strike = row['Strike']
+    option_type = row['Type']
+    buysell = row['Direction']
+    commission = row['Commission']
+    name = row['Name']
 
     center = round(st.session_state['opt']['Strike'].mean(), 0)
 
