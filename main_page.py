@@ -21,7 +21,7 @@ def add_to_list(strike, option_type, buysell, commission, options):
     options = pd.concat([df, row_to_append])
     return options
 
-st.button("Add to list", on_click=add_to_list, args=(strike, option_type, buysell, commission, options))
+options = st.button("Add to list", on_click=add_to_list, args=(strike, option_type, buysell, commission, options))
 
 st.write(options)
 
