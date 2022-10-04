@@ -39,7 +39,7 @@ for i in range(-10, 10):
     df = pd.concat([df, row_to_append])
 
 
-chart = alt.Chart(df).mark_line().encode(
+chart = alt.Chart(df).mark_area().encode(
     x='Expiration Price',
     y='Profit'
 )
