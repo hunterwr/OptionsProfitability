@@ -7,12 +7,13 @@ st.markdown('# Option Profitability')
 
 col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
 
-@st.cache
-def do_this_once():
-    options = pd.DataFrame()
-    return options
 
-options = do_this_once()
+
+
+if 'opt' not in st.session_state:
+    options = pd.DataFrame()
+    st.session_state['opt'] = 'options'
+
 
 tickr = col1.text_input('Ticker')
 strike = col2.number_input('Strike Price')
@@ -21,14 +22,14 @@ buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
 commission = col5.number_input('Commision')
 gap = col6.number_input('Gap between strikes')
 
-def add_to_list(strike, option_type, buysell, commission, options):
+def add_to_list(strike, option_type, buysell, commission):
     row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
-    options = pd.concat([options, row_to_append])
-    return options
+    st.session_state['opt'] = pd.concat([st.session_state['opt'], row_to_append])
+    
 
 btn = st.button("Add to list")
 if btn:
-    options = add_to_list(strike, option_type, buysell, commission, options)
+    add_to_list(strike, option_type, buysell, commission)
     btn = False
 else:
     pass
