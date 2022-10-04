@@ -83,10 +83,10 @@ chart = alt.Chart(st.session_state['df']).mark_line().encode(
     color='Name'
 )
 
-chart2 = alt.Chart(st.session_state['df']).mark_area().encode(
-    x='Expiration Price',
-    y='sum(Profit)',
-)
+# chart2 = alt.Chart(st.session_state['df']).mark_area().encode(
+#     x='Expiration Price',
+#     y='sum(Profit)',
+# )
 
-final_chart = chart2 + chart
-st.altair_chart(final_chart, use_container_width=True)
+# final_chart = chart2 + chart
+# st.altair_chart(final_chart, use_container_width=True)
