@@ -33,7 +33,7 @@ if btn:
 else:
     pass
 
-st.write(options)
+st.write(st.session_state['opt'])
 
 #st.multiselect('Compare multiple options')
 
