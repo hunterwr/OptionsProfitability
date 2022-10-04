@@ -37,46 +37,45 @@ btn = st.button("Add to list")
 if btn:
     add_to_list(strike, option_type, buysell, commission)
     del st.session_state['df']
-    btn = False
+    options = st.session_state['opt']
+    for idx in range(0, len(options)-1):
+        
+        strike = options['Strike'].values[idx]
+        option_type = options['Type'].values[idx]
+        buysell = options['Direction'].values[idx]
+        commission = options['Commission'].values[idx]
+        name = options['Name'].values[idx]
+
+        center = round(st.session_state['opt']['Strike'].mean(), 0)
+
+        for i in range(-15, 15):
+            #define row to add
+            price_at_expiration = center + (i*gap)
+            if option_type == 'Call' and price_at_expiration > strike:
+                profit = price_at_expiration - strike - commission
+            elif option_type == 'Call' and price_at_expiration <= strike:
+                profit = commission * -1
+            elif option_type == 'Put' and price_at_expiration < strike:
+                profit = strike - price_at_expiration - commission
+            elif option_type == 'Put' and price_at_expiration >= strike:
+                profit = commission * -1
+
+            if buysell == 'Sell':
+                profit*=-1
+
+            if 'df' not in st.session_state:
+                df = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
+                st.session_state['df'] = df
+            else:
+                row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
+                st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
+        btn = False
 else:
     pass
 
 st.write(st.session_state['opt'])
 
 #st.multiselect('Compare multiple options')
-
-options = st.session_state['opt']
-for idx in range(0, len(options)-1):
-    
-    strike = options['Strike'].values[idx]
-    option_type = options['Type'].values[idx]
-    buysell = options['Direction'].values[idx]
-    commission = options['Commission'].values[idx]
-    name = options['Name'].values[idx]
-
-    center = round(st.session_state['opt']['Strike'].mean(), 0)
-
-    for i in range(-15, 15):
-        #define row to add
-        price_at_expiration = center + (i*gap)
-        if option_type == 'Call' and price_at_expiration > strike:
-            profit = price_at_expiration - strike - commission
-        elif option_type == 'Call' and price_at_expiration <= strike:
-            profit = commission * -1
-        elif option_type == 'Put' and price_at_expiration < strike:
-            profit = strike - price_at_expiration - commission
-        elif option_type == 'Put' and price_at_expiration >= strike:
-            profit = commission * -1
-
-        if buysell == 'Sell':
-            profit*=-1
-
-        if 'df' not in st.session_state:
-            df = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
-            st.session_state['df'] = df
-        else:
-            row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
-            st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
 
 
 chart = alt.Chart(st.session_state['df']).mark_line().encode(
