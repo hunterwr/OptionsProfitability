@@ -7,14 +7,32 @@ st.markdown('# Option Profitability')
 
 col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
 
+options = pd.DataFrame()
+
 tickr = col1.text_input('Ticker')
 strike = col2.number_input('Strike Price')
 option_type = col3.selectbox('Call or Put', ['Call', 'Put'])
 buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
-comission = col5.number_input('Commision')
+commission = col5.number_input('Commision')
 gap = col6.number_input('Gap between strikes')
 
+def add_to_list(strike, option_type, buysell, commission, options):
+    row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+strike.astype(str)+" for "+commission.astype(str)}])
+    options = pd.concat([df, row_to_append])
+    return options
 
+st.button("Add to list", on_click=add_to_list, args=(strike, option_type, buysell, commission, options))
+
+st.write(options)
+
+#st.multiselect('Compare multiple options')
+
+
+for row in options:
+    strike = row['Strike']
+    option_type = row['Type']
+    buysell = row['Direction']
+    commission = row['Commission']
 
 df = pd.DataFrame()
 
@@ -22,13 +40,13 @@ for i in range(-10, 10):
     #define row to add
     price_at_expiration = strike + (i*gap)
     if option_type == 'Call' and price_at_expiration > strike:
-        profit = price_at_expiration - strike - comission
+        profit = price_at_expiration - strike - commission
     elif option_type == 'Call' and price_at_expiration <= strike:
-        profit = comission * -1
+        profit = commission * -1
     elif option_type == 'Put' and price_at_expiration < strike:
-        profit = strike - price_at_expiration - comission
+        profit = strike - price_at_expiration - commission
     elif option_type == 'Put' and price_at_expiration >= strike:
-        profit = comission * -1
+        profit = commission * -1
 
     if buysell == 'Sell':
         profit*=-1
