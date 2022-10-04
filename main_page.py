@@ -86,7 +86,7 @@ chart = alt.Chart(st.session_state['df']).mark_line().encode(
 chart2 = alt.Chart(st.session_state['df']).mark_area().encode(
     x='Expiration Price',
     y='sum(Profit)',
-    color=alt.condition((sum(st.session_state['df'].Profit) > 0), alt.ColorValue('green'), alt.ColorValue('red'))
+    color=alt.condition((st.session_state['df']['Profit'].sum() > 0), alt.ColorValue('green'), alt.ColorValue('red'))
 )
 
 final_chart = chart2 + chart
