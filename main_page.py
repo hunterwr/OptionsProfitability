@@ -54,7 +54,7 @@ for idx, row in options.iterrows():
 
 df = pd.DataFrame()
 
-center = st.session_state['opt']['strike'].mean().floor()
+center = st.session_state['opt']['Strike'].mean().floor()
 st.write(center)
 
 for i in range(-15, 15):
