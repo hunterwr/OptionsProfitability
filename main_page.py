@@ -39,6 +39,8 @@ if btn:
     if 'df' in st.session_state:
         del st.session_state['df']
     options = st.session_state['opt']
+    center = round(options['Strike'].mean(), 0)
+
     for idx in range(0, len(options)):
         
         strike = options['Strike'].values[idx]
@@ -47,11 +49,9 @@ if btn:
         commission = options['Commission'].values[idx]
         name = options['Name'].values[idx]
 
-        center = round(st.session_state['opt']['Strike'].mean(), 0)
-
-        for i in range(-15, 15):
+        for i in range(-1*round(center/5, 0), round(center/5, 0):
             #define row to add
-            price_at_expiration = center + (i*gap)
+            price_at_expiration = center + (i*0.10)
             if option_type == 'Call' and price_at_expiration > strike:
                 profit = price_at_expiration - strike - commission
             elif option_type == 'Call' and price_at_expiration <= strike:
