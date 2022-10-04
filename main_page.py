@@ -17,7 +17,7 @@ commission = col5.number_input('Commision')
 gap = col6.number_input('Gap between strikes')
 
 def add_to_list(strike, option_type, buysell, commission, options):
-    row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+strike.astype(str)+" for "+commission.astype(str)}])
+    row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
     options = pd.concat([df, row_to_append])
     return options
 
