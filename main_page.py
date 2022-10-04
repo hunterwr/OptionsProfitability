@@ -59,7 +59,7 @@ st.write(center)
 
 for i in range(-15, 15):
     #define row to add
-    price_at_expiration = strike + (i*gap)
+    price_at_expiration = center + (i*gap)
     if option_type == 'Call' and price_at_expiration > strike:
         profit = price_at_expiration - strike - commission
     elif option_type == 'Call' and price_at_expiration <= strike:
