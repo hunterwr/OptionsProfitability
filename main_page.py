@@ -46,7 +46,7 @@ st.write(st.session_state['opt'])
 
 options = st.session_state['opt']
 for idx in range(0, len(options)-1):
-    row = df.iloc[[idx]]
+    row = options.iloc[[idx]]
     strike = row['Strike']
     option_type = row['Type']
     buysell = row['Direction']
