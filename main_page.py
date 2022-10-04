@@ -74,12 +74,13 @@ for i in range(-10, 10):
         st.session_state['df'] = df
     else:
         row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
-        df = pd.concat([df, row_to_append])
+        st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
 
 
-chart = alt.Chart(df).mark_area().encode(
+chart = alt.Chart(st.session_state['df']).mark_area().encode(
     x='Expiration Price',
-    y='Profit'
+    y='Profit',
+    color='Name'
 )
 
 st.altair_chart(chart, use_container_width=True)
