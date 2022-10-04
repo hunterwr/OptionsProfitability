@@ -76,14 +76,12 @@ else:
     pass
 
 if 'opt' in st.session_state:
-    btn2 = col1.button("Clear list")
+    btn2 = col2.button("Clear list")
     if btn2:
         del st.session_state['opt']
         btn = False
     else:
         pass
-
-st.write(st.session_state['opt'])
 
 #st.multiselect('Compare multiple options')
 
