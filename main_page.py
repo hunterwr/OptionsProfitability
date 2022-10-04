@@ -23,3 +23,9 @@ for i in range(-10, 10):
     df = pd.concat([df, row_to_append])
 
 
+chart = alt.Chart(df).mark_line().encode(
+    x='Expiration Price',
+    y='points'
+)
+
+st.altair_chart(chart, use_container_width=True)
