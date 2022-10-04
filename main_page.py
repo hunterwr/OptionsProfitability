@@ -96,7 +96,7 @@ st.write(totals)
 chart2 = alt.Chart(totals).mark_area(opacity=0.8).encode(
     x='Expiration Price',
     y='Profit',
-    color = alt.condition('Profit/Loss', alt.Color('red'), alt.Color('green'))
+    color = alt.Color('Profit/Loss', range=['red', 'green'])
 )
 
 final_chart = chart2 + chart
