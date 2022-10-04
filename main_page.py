@@ -31,7 +31,7 @@ for i in range(-10, 10):
         profit = comission * -1
 
     if buysell == 'Sell':
-        profit*-1
+        profit*=-1
 
     row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit}])
 
