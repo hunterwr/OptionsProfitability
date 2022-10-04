@@ -5,7 +5,7 @@ import altair as alt
 
 st.markdown('# Option Profitability')
 
-col1, col2, col3, col4, col5= st.columns([1,1,1,1,1])
+col2, col3, col4, col5= st.columns([1,1,1,1,])
 
 
 
@@ -15,7 +15,7 @@ if 'opt' not in st.session_state:
     st.session_state['opt'] = options
 
 
-tickr = col1.text_input('Ticker')
+#tickr = col1.text_input('Ticker')
 strike = col2.number_input('Strike Price')
 option_type = col3.selectbox('Call or Put', ['Call', 'Put'])
 buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
