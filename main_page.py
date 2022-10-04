@@ -50,6 +50,7 @@ for row in st.session_state['opt'].iterrows():
     option_type = row['Type']
     buysell = row['Direction']
     commission = row['Commission']
+    name = row['Name']
 
 df = pd.DataFrame()
 
@@ -68,10 +69,12 @@ for i in range(-10, 10):
     if buysell == 'Sell':
         profit*=-1
 
-    row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit}])
-
-    #add row to empty DataFrame
-    df = pd.concat([df, row_to_append])
+    if 'df' not in st.session_state:
+        df = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
+        st.session_state['df'] = df
+    else:
+        row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
+        df = pd.concat([df, row_to_append])
 
 
 chart = alt.Chart(df).mark_area().encode(
