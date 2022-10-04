@@ -77,10 +77,16 @@ for i in range(-10, 10):
         st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
 
 
-chart = alt.Chart(st.session_state['df']).mark_area().encode(
+chart = alt.Chart(st.session_state['df']).mark_line().encode(
     x='Expiration Price',
     y='Profit',
     color='Name'
 )
 
-st.altair_chart(chart, use_container_width=True)
+chart2 = alt.Chart(st.session_state['df']).mark_area().encode(
+    x='Expiration Price',
+    y='sum(Profit)',
+)
+
+final_chart = chart2 + chart
+st.altair_chart(final_chart, use_container_width=True)
