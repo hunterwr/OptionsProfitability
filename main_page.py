@@ -33,7 +33,7 @@ def add_to_list(strike, option_type, buysell, commission):
     st.session_state['opt'] = options
 
 
-btn = st.button("Add to list")
+btn = col1.button("Add to list")
 if btn:
     add_to_list(strike, option_type, buysell, commission)
     if 'df' in st.session_state:
@@ -75,36 +75,46 @@ if btn:
 else:
     pass
 
+if 'opt' in st.session_state:
+    btn2 = col1.button("Clear list")
+    if btn2:
+        del st.session_state['opt']
+        btn = False
+    else:
+        pass
+
 st.write(st.session_state['opt'])
 
 #st.multiselect('Compare multiple options')
 
+if 'opt' not in st.session_state:
+    pass
+else:
+    chart = alt.Chart(st.session_state['df']).mark_line().encode(
+        x='Expiration Price',
+        y='Profit',
+        color='Name'
+    )
 
-chart = alt.Chart(st.session_state['df']).mark_line().encode(
-    x='Expiration Price',
-    y='Profit',
-    color='Name'
-)
 
+    totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().reset_index()
+    totals['Profit/Loss'] = 'Profit'
+    totals.loc[totals['Profit'] < 0, 'Profit/Loss'] = 'Loss'
 
-totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().reset_index()
-totals['Profit/Loss'] = 'Profit'
-totals.loc[totals['Profit'] < 0, 'Profit/Loss'] = 'Loss'
+    st.write(totals)
 
-st.write(totals)
+    chart2 = alt.Chart(totals).mark_area(opacity=0.5).encode(
+        x='Expiration Price',
+        y='Profit',
+        color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
+    )
 
-chart2 = alt.Chart(totals).mark_area(opacity=0.5).encode(
-    x='Expiration Price',
-    y='Profit',
-    color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
-)
+    chart3 = alt.Chart(totals).mark_line().encode(
+        x='Expiration Price',
+        y='Profit',
+        color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
+    )
 
-chart3 = alt.Chart(totals).mark_line().encode(
-    x='Expiration Price',
-    y='Profit',
-    color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
-)
-
-final_chart = chart2 + chart3
-st.altair_chart(chart, use_container_width=True)
-st.altair_chart(final_chart, use_container_width=True)
+    final_chart = chart2 + chart3
+    st.altair_chart(chart, use_container_width=True)
+    st.altair_chart(final_chart, use_container_width=True)
