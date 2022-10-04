@@ -89,7 +89,7 @@ chart = alt.Chart(st.session_state['df']).mark_line().encode(
 
 totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().reset_index()
 totals['Profit/Loss'] = 'Profit'
-totals.loc[totals['Profit'] < 0, 'Profit/Loss'] == 'Loss'
+totals.loc[totals['Profit'] < 0, 'Profit/Loss'] = 'Loss'
 
 st.write(totals)
 
