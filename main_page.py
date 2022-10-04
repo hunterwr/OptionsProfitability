@@ -7,7 +7,12 @@ st.markdown('# Option Profitability')
 
 col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
 
-options = pd.DataFrame()
+@st.cache
+def do_this_once():
+    options = pd.DataFrame()
+    return options
+
+options = do_this_once()
 
 tickr = col1.text_input('Ticker')
 strike = col2.number_input('Strike Price')
