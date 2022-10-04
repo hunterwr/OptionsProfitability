@@ -63,6 +63,8 @@ if btn:
 
             if buysell == 'Sell':
                 profit*=-1
+
+            profit *= 100
             
 
             if 'df' not in st.session_state:
