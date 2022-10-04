@@ -52,6 +52,10 @@ for idx in range(0, len(options)-1):
     buysell = options['Direction'].loc[[idx]]
     commission = options['Commission'].loc[[idx]]
     name = options['Name'].loc[[idx]]
+
+    st.write(options['Type'].loc[[idx]])
+    st.write(options['Strike'].loc[[idx]])
+
     center = round(st.session_state['opt']['Strike'].mean(), 0)
 
     for i in range(-15, 15):
