@@ -88,7 +88,7 @@ chart = alt.Chart(st.session_state['df']).mark_line().encode(
 
 
 totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().reset_index()
-st.write(st.session_state['opt'])
+st.write(st.session_state['df'])
 st.write(totals)
 chart2 = alt.Chart(totals).mark_area(opacity=0.3).encode(
     x='Expiration Price',
