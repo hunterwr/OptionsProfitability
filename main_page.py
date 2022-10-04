@@ -22,7 +22,6 @@ buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
 commission = col5.number_input('Commision')
 gap = col6.number_input('Gap between strikes')
 
-st.write(st.session_state['opt'])
 
 def add_to_list(strike, option_type, buysell, commission):
     if 'opt' not in st.session_state:
@@ -46,7 +45,7 @@ st.write(st.session_state['opt'])
 #st.multiselect('Compare multiple options')
 
 
-for row in options:
+for row in st.session_state['opt']:
     strike = row['Strike']
     option_type = row['Type']
     buysell = row['Direction']
