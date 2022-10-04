@@ -49,7 +49,7 @@ if btn:
         commission = options['Commission'].values[idx]
         name = options['Name'].values[idx]
 
-        for i in range(-1*round(center/5, 0), round(center/5, 0)):
+        for i in range(-1*int(center/5), int(center/5)):
             #define row to add
             price_at_expiration = center + (i*0.10)
             if option_type == 'Call' and price_at_expiration > strike:
