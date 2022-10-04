@@ -45,8 +45,8 @@ st.write(st.session_state['opt'])
 #st.multiselect('Compare multiple options')
 
 options = st.session_state['opt']
-for idx in len(options):
-    row = df.iloc[[idx-1]]
+for idx in range(0, len(options)-1):
+    row = df.iloc[[idx]]
     strike = row['Strike']
     option_type = row['Type']
     buysell = row['Direction']
