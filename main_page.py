@@ -51,6 +51,11 @@ for idx in range(0, len(options)-1):
     option_type = row['Type']
     buysell = row['Direction']
     commission = row['Commission']
+
+    st.write(row['Strike'])
+    st.write(row['Type'])
+    st.write(row['Direction'])
+
     name = row['Name']
 
     center = round(st.session_state['opt']['Strike'].mean(), 0)
