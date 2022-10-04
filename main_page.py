@@ -39,7 +39,7 @@ if btn:
     if 'df' in st.session_state:
         del st.session_state['df']
     options = st.session_state['opt']
-    for idx in range(0, len(options)-1):
+    for idx in range(0, len(options)):
         
         strike = options['Strike'].values[idx]
         option_type = options['Type'].values[idx]
