@@ -12,7 +12,7 @@ col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
 
 if 'opt' not in st.session_state:
     options = pd.DataFrame()
-    st.session_state['opt'] = 'options'
+    st.session_state['opt'] = options
 
 
 tickr = col1.text_input('Ticker')
@@ -25,7 +25,6 @@ gap = col6.number_input('Gap between strikes')
 def add_to_list(strike, option_type, buysell, commission):
     row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
     st.session_state['opt'] = pd.concat([st.session_state['opt'], row_to_append])
-    
 
 btn = st.button("Add to list")
 if btn:
@@ -39,11 +38,11 @@ st.write(options)
 #st.multiselect('Compare multiple options')
 
 
-# for row in options:
-#     strike = row['Strike']
-#     option_type = row['Type']
-#     buysell = row['Direction']
-#     commission = row['Commission']
+for row in options:
+    strike = row['Strike']
+    option_type = row['Type']
+    buysell = row['Direction']
+    commission = row['Commission']
 
 df = pd.DataFrame()
 
