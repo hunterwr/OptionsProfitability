@@ -99,7 +99,6 @@ else:
     totals['Profit/Loss'] = 'Profit'
     totals.loc[totals['Profit'] < 0, 'Profit/Loss'] = 'Loss'
 
-    st.write(totals)
 
     chart2 = alt.Chart(totals).mark_area(opacity=0.5).encode(
         x='Expiration Price',
