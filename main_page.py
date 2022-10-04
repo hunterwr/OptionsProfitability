@@ -36,6 +36,7 @@ def add_to_list(strike, option_type, buysell, commission):
 btn = st.button("Add to list")
 if btn:
     add_to_list(strike, option_type, buysell, commission)
+    del st.session_state['df']
     btn = False
 else:
     pass
