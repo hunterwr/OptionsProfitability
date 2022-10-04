@@ -50,6 +50,11 @@ for row in st.session_state['opt'].iterrows():
     option_type = row['Type']
     buysell = row['Direction']
     commission = row['Commission']
+    st.write(row['Strike'])
+    st.write(row['Type'])
+    st.write(row['Direction'])
+    st.write(row['Commission'])
+    st.write(row['Name'])
     name = row['Name']
 
 df = pd.DataFrame()
