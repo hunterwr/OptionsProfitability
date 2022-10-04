@@ -44,8 +44,8 @@ st.write(st.session_state['opt'])
 
 #st.multiselect('Compare multiple options')
 
-
-for row in st.session_state['opt'].iterrows():
+options = st.session_state['opt']
+for idx, row in options.iterrows():
     strike = row['Strike']
     option_type = row['Type']
     buysell = row['Direction']
