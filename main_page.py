@@ -100,7 +100,7 @@ else:
         y='Profit',
         color='Name',
         tooltip='Profit'
-    ).interactive(bind_y=False)
+    ).interactive(bind_x=False)
 
 
     totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().reset_index()
@@ -113,14 +113,14 @@ else:
         y='Profit',
         color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red'])),
         tooltip='Profit'
-    ).interactive(bind_y=False)
+    ).interactive(bind_x=False)
 
     chart3 = alt.Chart(totals).mark_line().encode(
         x='Expiration Price',
         y='Profit',
         color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red'])),
         tooltip='Profit'
-    ).interactive(bind_y=False)
+    ).interactive(bind_x=False)
 
     final_chart = chart2 + chart3
     st.altair_chart(chart, use_container_width=True)
