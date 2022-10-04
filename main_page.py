@@ -93,12 +93,18 @@ totals.loc[totals['Profit'] < 0, 'Profit/Loss'] = 'Loss'
 
 st.write(totals)
 
-chart2 = alt.Chart(totals).mark_area(opacity=0.8).encode(
+chart2 = alt.Chart(totals).mark_area(opacity=0.5).encode(
     x='Expiration Price',
     y='Profit',
-    color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['red', 'green']))
+    color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
 )
 
-final_chart = chart2 + chart
+chart3 = alt.Chart(totals).mark_line(size=10).encode(
+    x='Expiration Price',
+    y='Profit',
+    color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
+)
+
+final_chart = chart2 + chart3
 st.altair_chart(chart, use_container_width=True)
-st.altair_chart(chart2, use_container_width=True)
+st.altair_chart(final_chart, use_container_width=True)
