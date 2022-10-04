@@ -47,14 +47,14 @@ st.write(st.session_state['opt'])
 options = st.session_state['opt']
 for idx in range(0, len(options)-1):
     
-    strike = options.at[idx, 'Strike']
-    option_type = options.at[idx, 'Type']
-    buysell = options.at[idx, 'Direction']
-    commission = options.at[idx, 'Commission']
-    name = options.at[idx, 'Name']
+    strike = options['Strike'].values[idx]
+    option_type = options['Type'].values[idx]
+    buysell = options['Direction'].values[idx]
+    commission = options['Commission'].values[idx]
+    name = options['Name'].values[idx]
 
-    st.write(options.at[idx, 'Name'])
-    st.write(options.at[idx, 'Direction'])
+    st.write(options['Type'].values[idx])
+    st.write(options['Strike'].values[idx])
 
     center = round(st.session_state['opt']['Strike'].mean(), 0)
 
