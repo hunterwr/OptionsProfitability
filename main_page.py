@@ -12,7 +12,7 @@ strike = col2.number_input('Strike Price')
 option_type = col3.selectbox('Call or Put', ['Call', 'Put'])
 buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
 comission = col5.number_input('Commision')
-gap = col5.number_input('Gap between strikes')
+gap = col6.number_input('Gap between strikes')
 
 
 
