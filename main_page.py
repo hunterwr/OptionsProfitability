@@ -25,6 +25,9 @@ gap = col6.number_input('Gap between strikes')
 st.write(st.session_state['opt'])
 
 def add_to_list(strike, option_type, buysell, commission):
+    if 'opt' not in st.session_state:
+        options = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
+        st.session_state['opt'] = options
     row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
     options = st.session_state['opt']
     options = pd.concat([options, row_to_append])
