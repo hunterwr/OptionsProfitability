@@ -22,6 +22,8 @@ buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
 commission = col5.number_input('Commision')
 gap = col6.number_input('Gap between strikes')
 
+st.write(st.session_state['opt'])
+
 def add_to_list(strike, option_type, buysell, commission):
     row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
     options = st.session_state['opt']
