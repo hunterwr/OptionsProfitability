@@ -24,8 +24,9 @@ def add_to_list(strike, option_type, buysell, commission, options):
 btn = st.button("Add to list")
 if btn:
     options = add_to_list(strike, option_type, buysell, commission, options)
+    btn = False
 else:
-    options = add_to_list(strike, option_type, buysell, commission, options)
+    pass
 
 st.write(options)
 
