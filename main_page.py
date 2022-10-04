@@ -54,7 +54,10 @@ for idx, row in options.iterrows():
 
 df = pd.DataFrame()
 
-for i in range(-10, 10):
+center = st.session_state['opt']['strike'].mean().floor()
+st.write(center)
+
+for i in range(-15, 15):
     #define row to add
     price_at_expiration = strike + (i*gap)
     if option_type == 'Call' and price_at_expiration > strike:
