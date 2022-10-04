@@ -91,7 +91,7 @@ totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().rese
 chart2 = alt.Chart(totals).mark_area(opacity=0.3).encode(
     x='Expiration Price',
     y='Profit',
-    color = alt.condition(('Profit' > 0), 
+    color = alt.condition(('Profit:Q' > 0), 
                                 alt.ColorValue('green'), 
                                 alt.ColorValue('red'))
 )
