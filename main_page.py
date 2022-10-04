@@ -39,11 +39,11 @@ st.write(options)
 #st.multiselect('Compare multiple options')
 
 
-for row in options:
-    strike = row['Strike']
-    option_type = row['Type']
-    buysell = row['Direction']
-    commission = row['Commission']
+# for row in options:
+#     strike = row['Strike']
+#     option_type = row['Type']
+#     buysell = row['Direction']
+#     commission = row['Commission']
 
 df = pd.DataFrame()
 
