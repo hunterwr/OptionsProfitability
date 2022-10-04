@@ -5,7 +5,7 @@ import altair as alt
 
 st.markdown('# Option Profitability')
 
-col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
+col1, col2, col3, col4, col5= st.columns([1,1,1,1,1])
 
 
 
@@ -20,7 +20,7 @@ strike = col2.number_input('Strike Price')
 option_type = col3.selectbox('Call or Put', ['Call', 'Put'])
 buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
 commission = col5.number_input('Commision')
-gap = col6.number_input('Gap between strikes')
+#gap = col6.number_input('Gap between strikes')
 
 
 def add_to_list(strike, option_type, buysell, commission):
@@ -76,12 +76,15 @@ else:
     pass
 
 if 'opt' in st.session_state:
-    btn2 = col2.button("Clear list")
+    st.write(st.session_state['opt'])
+    btn2 = col1.button("Clear list")
     if btn2:
         del st.session_state['opt']
         btn = False
     else:
         pass
+
+
 
 #st.multiselect('Compare multiple options')
 
