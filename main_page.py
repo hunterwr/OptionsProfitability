@@ -99,7 +99,7 @@ chart2 = alt.Chart(totals).mark_area(opacity=0.5).encode(
     color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
 )
 
-chart3 = alt.Chart(totals).mark_line(size=10).encode(
+chart3 = alt.Chart(totals).mark_line().encode(
     x='Expiration Price',
     y='Profit',
     color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red']))
