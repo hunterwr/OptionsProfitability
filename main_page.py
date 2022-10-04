@@ -5,7 +5,7 @@ import altair as alt
 
 st.markdown('# Option Profitability')
 
-col2, col3, col4, col5= st.columns([1,1,1,1,])
+col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,1,1])
 
 
 
@@ -15,19 +15,25 @@ if 'opt' not in st.session_state:
     st.session_state['opt'] = options
 
 
-#tickr = col1.text_input('Ticker')
+tickr = col1.text_input('Ticker')
 strike = col2.number_input('Strike Price')
 option_type = col3.selectbox('Call or Put', ['Call', 'Put'])
 buysell = col4.selectbox('Buy or Sell', ['Buy', 'Sell'])
 commission = col5.number_input('Commision')
+contracts = col6.number_input('Number of Contracts')
 #gap = col6.number_input('Gap between strikes')
 
 
 def add_to_list(strike, option_type, buysell, commission):
     if 'opt' not in st.session_state:
-        options = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
+        options = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 
+        'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)+" "+contracts+" contracts", "Contracts":contracts}])
+
         st.session_state['opt'] = options
-    row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)}])
+
+    row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission,
+     'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)+" "+contracts+" contracts", "Contracts":contracts}])
+
     options = st.session_state['opt']
     options = pd.concat([options, row_to_append])
     st.session_state['opt'] = options
@@ -48,6 +54,8 @@ if btn:
         buysell = options['Direction'].values[idx]
         commission = options['Commission'].values[idx]
         name = options['Name'].values[idx]
+        contracts = options['Contracts'].values[idx]
+
 
         for i in range(-1*int((center/0.10)/2), int((center/0.10)/2)):
             #define row to add
@@ -65,6 +73,7 @@ if btn:
                 profit*=-1
 
             profit *= 100
+            profit *= contracts
             
 
             if 'df' not in st.session_state:
@@ -73,6 +82,7 @@ if btn:
             else:
                 row_to_append = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name}])
                 st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
+                
         btn = False
 else:
     pass
@@ -95,7 +105,7 @@ if 'opt' in st.session_state:
 if 'opt' not in st.session_state:
     pass
 else:
-    chart = alt.Chart(st.session_state['df']).mark_line().encode(
+    chart = alt.Chart(st.session_state['df'], title=tickr).mark_line().encode(
         x='Expiration Price',
         y='Profit',
         color='Name',
@@ -108,14 +118,14 @@ else:
     totals.loc[totals['Profit'] < 0, 'Profit/Loss'] = 'Loss'
 
 
-    chart2 = alt.Chart(totals).mark_area(opacity=0.5).encode(
+    chart2 = alt.Chart(totals, title=tickr).mark_area(opacity=0.5).encode(
         x='Expiration Price',
         y='Profit',
         color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red'])),
         tooltip='Profit'
     ).interactive()
 
-    chart3 = alt.Chart(totals).mark_line().encode(
+    chart3 = alt.Chart(totals, title=tickr).mark_line().encode(
         x='Expiration Price',
         y='Profit',
         color = alt.Color('Profit/Loss', scale=alt.Scale(domain=['Profit', 'Loss'], range=['green', 'red'])),
