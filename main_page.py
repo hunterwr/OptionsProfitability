@@ -27,12 +27,12 @@ contracts = col6.number_input('Number of Contracts')
 def add_to_list(strike, option_type, buysell, commission):
     if 'opt' not in st.session_state:
         options = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission, 
-        'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)+" "+contracts+" contracts", "Contracts":contracts}])
+        'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)+" "+str(contracts)+" contracts", "Contracts":contracts}])
 
         st.session_state['opt'] = options
 
     row_to_append = pd.DataFrame([{'Strike':strike, 'Type':option_type, 'Direction':buysell, 'Commission':commission,
-     'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)+" "+contracts+" contracts", "Contracts":contracts}])
+     'Name':buysell+" "+option_type+" at "+str(strike)+" for "+str(commission)+" "+str(contracts)+" contracts", "Contracts":contracts}])
 
     options = st.session_state['opt']
     options = pd.concat([options, row_to_append])
@@ -82,7 +82,7 @@ if btn:
             else:
                 row_to_append = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name}])
                 st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
-                
+
         btn = False
 else:
     pass
