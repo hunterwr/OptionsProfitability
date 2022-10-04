@@ -52,32 +52,29 @@ for idx, row in options.iterrows():
     commission = row['Commission']
     name = row['Name']
 
-df = pd.DataFrame()
+    center = round(st.session_state['opt']['Strike'].mean(), 0)
 
-center = round(st.session_state['opt']['Strike'].mean(), 0)
-st.write(center)
+    for i in range(-15, 15):
+        #define row to add
+        price_at_expiration = center + (i*gap)
+        if option_type == 'Call' and price_at_expiration > strike:
+            profit = price_at_expiration - strike - commission
+        elif option_type == 'Call' and price_at_expiration <= strike:
+            profit = commission * -1
+        elif option_type == 'Put' and price_at_expiration < strike:
+            profit = strike - price_at_expiration - commission
+        elif option_type == 'Put' and price_at_expiration >= strike:
+            profit = commission * -1
 
-for i in range(-15, 15):
-    #define row to add
-    price_at_expiration = center + (i*gap)
-    if option_type == 'Call' and price_at_expiration > strike:
-        profit = price_at_expiration - strike - commission
-    elif option_type == 'Call' and price_at_expiration <= strike:
-        profit = commission * -1
-    elif option_type == 'Put' and price_at_expiration < strike:
-        profit = strike - price_at_expiration - commission
-    elif option_type == 'Put' and price_at_expiration >= strike:
-        profit = commission * -1
+        if buysell == 'Sell':
+            profit*=-1
 
-    if buysell == 'Sell':
-        profit*=-1
-
-    if 'df' not in st.session_state:
-        df = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
-        st.session_state['df'] = df
-    else:
-        row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
-        st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
+        if 'df' not in st.session_state:
+            df = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
+            st.session_state['df'] = df
+        else:
+            row_to_append = pd.DataFrame([{'Expiration Price':(strike+(gap*i)), 'Profit':profit, 'Name':name}])
+            st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
 
 
 chart = alt.Chart(st.session_state['df']).mark_line().encode(
