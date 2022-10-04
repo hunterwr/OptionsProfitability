@@ -53,9 +53,6 @@ for idx in range(0, len(options)-1):
     commission = options['Commission'].values[idx]
     name = options['Name'].values[idx]
 
-    st.write(options['Type'].values[idx])
-    st.write(options['Strike'].values[idx])
-
     center = round(st.session_state['opt']['Strike'].mean(), 0)
 
     for i in range(-15, 15):
@@ -89,8 +86,7 @@ chart = alt.Chart(st.session_state['df']).mark_line().encode(
 
 
 totals = st.session_state['df'].groupby('Expiration Price')['Profit'].sum().reset_index()
-st.write(st.session_state['df'])
-st.write(totals)
+
 chart2 = alt.Chart(totals).mark_area(opacity=0.3).encode(
     x='Expiration Price',
     y='Profit'
