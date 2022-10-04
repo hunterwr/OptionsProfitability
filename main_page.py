@@ -65,10 +65,10 @@ if btn:
                 profit*=-1
 
             if 'df' not in st.session_state:
-                df = pd.DataFrame([{'Expiration Price':(strike+(0.10*i)), 'Profit':profit, 'Name':name}])
+                df = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name}])
                 st.session_state['df'] = df
             else:
-                row_to_append = pd.DataFrame([{'Expiration Price':(strike+(0.10*i)), 'Profit':profit, 'Name':name}])
+                row_to_append = pd.DataFrame([{'Expiration Price':price_at_expiration, 'Profit':profit, 'Name':name}])
                 st.session_state['df'] = pd.concat([st.session_state['df'], row_to_append])
         btn = False
 else:
