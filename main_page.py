@@ -91,4 +91,5 @@ chart2 = alt.Chart(st.session_state['df']).mark_area(opacity=0.3).encode(
 )
 
 final_chart = chart2 + chart
-st.altair_chart(final_chart, use_container_width=True)
+st.altair_chart(chart, use_container_width=True)
+st.altair_chart(chart2, use_container_width=True)
